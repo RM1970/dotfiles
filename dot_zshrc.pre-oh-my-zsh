@@ -1,0 +1,131 @@
+# ~~~~~~~~~~~~~~~ SSH ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+# Using GPG + YubiKey for ssh.
+# Don't execute when in dev container
+
+# Perhaps some day!!! 
+
+#if [[ -z "$REMOTE_CONTAINERS" && -z "$CODESPACES" && -z "$DEVCONTAINER_TYPE" ]]; then
+#  export GPG_TTY="$(tty)"
+#  unset SSH_AGENT_PID
+
+#  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+#  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+#  fi
+
+#  gpgconf --launch gpg-agent
+#  gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
+
+#fi
+
+
+# ~~~~~~~~~~~~~~~ Environment Variables ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+# Set to superior editing mode
+
+set -o vi
+
+export VISUAL=nvim
+export EDITOR=nvim
+export TERM="tmux-256color"
+
+export BROWSER="firefox"
+
+# Directories
+
+export REPOS="$HOME/gits"
+#export GITUSER="mischavandenburg"
+#export GHREPOS="$REPOS/github.com/$GITUSER"
+#export DOTFILES="$GHREPOS/dotfiles"
+#export LAB="$GHREPOS/lab"
+export SCRIPTS="$HOME/scripts"
+export chezmoi="$HOME/bin"
+#export ICLOUD="$HOME/icloud"
+#export ZETTELKASTEN="$HOME/Zettelkasten"
+
+# Go related. In general all executables and scripts go in .local/bin
+
+#export GOBIN="$HOME/.local/bin"
+#export GOPRIVATE="github.com/$GITUSER/*,gitlab.com/$GITUSER/*"
+# export GOPATH="$HOME/.local/share/go"
+export GOPATH="$HOME/go/"
+
+
+# ~~~~~~~~~~~~~~~ Path configuration ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+setopt extended_glob null_glob
+
+path=(
+    $path                           # Keep existing PATH entries
+    $SCRIPTS
+    $chezmoi
+)
+
+# Remove duplicate entries and non-existent directories
+typeset -U path
+path=($^path(N-/))
+
+export PATH
+
+
+# ~~~~~~~~~~~~~~~ History ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+HISTTIMEFORMAT="[%d-%m-%Y %T] --> "
+
+setopt HIST_IGNORE_SPACE  # Don't save when prefixed with space
+setopt HIST_IGNORE_DUPS   # Don't save duplicate lines
+setopt SHARE_HISTORY      # Share history between sessions
+
+
+# ~~~~~~~~~~~~~~~ Prompt ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+#autoload -U promptinit; promptinit
+#prompt pure
+
+
+# ~~~~~~~~~~~~~~~ Aliases ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+if [ -f $HOME/.aliases ]; then
+   . $HOME/.aliases
+fi
+
+
+
+# ~~~~~~~~~~~~~~~ fzf ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+#source <(fzf --zsh)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+
+
+
+
+# ~~~~~~~~~~~~~~~ Sourcing ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+#source "$HOME/.privaterc"
+
+#eval "$(direnv hook zsh)"
+
+# ~~~~~~~~~~~~~~~ Oh-my-zsh ~~~~~~~~~~~~~~~~~~~~~~~~
+
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="fino-time"
+plugins=(git)
+zstyle ':omz:*' aliases no
+source $ZSH/oh-my-zsh.sh
+
+
+# The End!
