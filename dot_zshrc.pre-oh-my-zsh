@@ -36,20 +36,11 @@ export BROWSER="firefox"
 # Directories
 
 export REPOS="$HOME/gits"
-#export GITUSER="mischavandenburg"
-#export GHREPOS="$REPOS/github.com/$GITUSER"
-#export DOTFILES="$GHREPOS/dotfiles"
-#export LAB="$GHREPOS/lab"
+export GITUSER="RM1970"
 export SCRIPTS="$HOME/scripts"
 export chezmoi="$HOME/bin"
-#export ICLOUD="$HOME/icloud"
-#export ZETTELKASTEN="$HOME/Zettelkasten"
 
 # Go related. In general all executables and scripts go in .local/bin
-
-#export GOBIN="$HOME/.local/bin"
-#export GOPRIVATE="github.com/$GITUSER/*,gitlab.com/$GITUSER/*"
-# export GOPATH="$HOME/.local/share/go"
 export GOPATH="$HOME/go/"
 
 
